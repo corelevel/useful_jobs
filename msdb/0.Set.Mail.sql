@@ -44,6 +44,10 @@ begin
 		@pager_days=0, 
 		@email_address=@email_address_to, 
 		@category_name=N'[Uncategorized]'
+
+	exec master.dbo.sp_MSsetalertinfo @failsafeoperator=N'dba_notify', @notificationmethod=1
+
+	exec msdb.dbo.sp_set_sqlagent_properties @email_save_in_sent_folder=1
 end
 else
 begin
