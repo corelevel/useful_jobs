@@ -1,5 +1,7 @@
 exec sp_configure 'Database Mail XPs', 1
 go
+set nocount on
+go
 reconfigure
 go
 use msdb
@@ -45,9 +47,9 @@ begin
 		@email_address=@email_address_to, 
 		@category_name=N'[Uncategorized]'
 
-	exec master.dbo.sp_MSsetalertinfo @failsafeoperator=N'dba_notify', @notificationmethod=1
+	exec master.dbo.sp_MSsetalertinfo @failsafeoperator=@profile_name, @notificationmethod=1
 
-	exec msdb.dbo.sp_set_sqlagent_properties @email_save_in_sent_folder=1
+	exec dbo.sp_set_sqlagent_properties @email_save_in_sent_folder=1
 end
 else
 begin
